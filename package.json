@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build --base=/lezvie/ && gh-pages -d dist -t true"
+    "deploy": "vite build --base=/lezvie/ && gh-pages -d dist --dotfiles"
   },
   "dependencies": {
     "vue": "^3.5.13"
