@@ -4,14 +4,14 @@ import royalShave from '../assets/gallery/royal-shave.jpg'
 import clipper from '../assets/gallery/clipper.jpg'
 import beard from '../assets/gallery/beard.jpg'
 import fade from '../assets/gallery/fade.jpg'
-import kids from '../assets/gallery/kids.jpg'
+import atWork from '../assets/gallery/at-work.jpg'
 
 const works = [
   { photo: fade, label: 'Fade под машинку' },
   { photo: beard, label: 'Оформление бороды' },
   { photo: royalShave, label: 'Королевское бритьё' },
   { photo: clipper, label: 'Окантовка' },
-  { photo: kids, label: 'Детская стрижка' },
+  { photo: atWork, label: 'Мастер за работой' },
   { photo: interior, label: 'Наш зал' },
 ]
 </script>
