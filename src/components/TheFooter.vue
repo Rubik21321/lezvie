@@ -3,7 +3,7 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer id="contacts" class="footer">
+  <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-col">
         <a href="#" class="footer-logo"><span>✂</span> ЛЕЗВИЕ</a>

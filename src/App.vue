@@ -7,6 +7,7 @@ import AdvantagesSection from './components/AdvantagesSection.vue'
 import MastersSection from './components/MastersSection.vue'
 import ReviewsSection from './components/ReviewsSection.vue'
 import BookingSection from './components/BookingSection.vue'
+import MapSection from './components/MapSection.vue'
 import TheFooter from './components/TheFooter.vue'
 
 onMounted(() => {
@@ -34,6 +35,7 @@ onMounted(() => {
     <MastersSection />
     <ReviewsSection />
     <BookingSection />
+    <MapSection />
   </main>
   <TheFooter />
 </template>
