@@ -17,17 +17,91 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="canonical" href="https://rubik21321.github.io/lezvie/" />
+
+    <!-- Разметка для поисковиков: schema.org HairSalon -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HairSalon",
+      "name": "Барбершоп ЛЕЗВИЕ",
+      "description": "Мужские стрижки, оформление бороды, королевское бритьё в Подольске. Онлайн-запись.",
+      "url": "https://rubik21321.github.io/lezvie/",
+      "image": "https://rubik21321.github.io/lezvie/og-image.png",
+      "telephone": "+7 (4967) 00-00-00",
+      "priceRange": "900-2200 RUB",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Подольск",
+        "addressRegion": "Московская область",
+        "streetAddress": "Революционный проспект, 25",
+        "addressCountry": "RU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 55.430727,
+        "longitude": 37.554797
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "10:00",
+        "closes": "21:00"
+      }
+    }
+    </script>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <script type="module" crossorigin src="/lezvie/assets/index-BHwZlQHD.js"></script>
-    <link rel="stylesheet" crossorigin href="/lezvie/assets/index-CyOfoR0C.css">
+
+    <!-- Яндекс.Метрика: замените YM_COUNTER_ID на номер счётчика (только цифры),
+         например: var id = '12345678'. Счётчик не работает на localhost. -->
+    <script>
+      (function () {
+        var id = 'YM_COUNTER_ID';
+        var host = location.hostname;
+        if (!/^\d+$/.test(id) || host === 'localhost' || host === '127.0.0.1') return;
+        window.YM_ID = Number(id);
+        (function (m, e, t, r, i, k, a) {
+          m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+          m[i].l = 1 * new Date();
+          (k = e.createElement(t)), (a = e.getElementsByTagName(t)[0]);
+          k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+        ym(window.YM_ID, 'init', {
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true
+        });
+      })();
+    </script>
+    <script type="module" crossorigin src="/lezvie/assets/index-DHiiYIOO.js"></script>
+    <link rel="stylesheet" crossorigin href="/lezvie/assets/index-KwCezx3M.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Статический контент для поисковиков; Vue заменит его при загрузке -->
+      <main class="container" style="padding: 96px 0">
+        <h1 class="section-title">ЛЕЗВИЕ — барбершоп в Подольске</h1>
+        <p class="section-sub">
+          Мужские стрижки, оформление бороды и королевское бритьё опасной бритвой.
+          Онлайн-запись на сайте. Ежедневно с 10:00 до 21:00.
+        </p>
+        <h2>Услуги и цены</h2>
+        <ul>
+          <li>Мужская стрижка — 1 400 ₽ (60 мин)</li>
+          <li>Стрижка машинкой — 900 ₽ (30 мин)</li>
+          <li>Оформление бороды — 900 ₽ (40 мин)</li>
+          <li>Стрижка + борода — 2 000 ₽ (90 мин)</li>
+          <li>Королевское бритьё — 1 500 ₽ (45 мин)</li>
+          <li>Детская стрижка — 1 000 ₽ (45 мин)</li>
+          <li>Камуфляж седины — 1 200 ₽ (30 мин)</li>
+          <li>Отец + сын — 2 200 ₽ (100 мин)</li>
+        </ul>
+        <h2>Контакты</h2>
+        <p>
+          г. Подольск, Революционный проспект, 25 · +7 (4967) 00-00-00 ·
+          ежедневно 10:00–21:00
+        </p>
+      </main>
+    </div>
   </body>
 </html>
