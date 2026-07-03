@@ -1,14 +1,19 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
+
+const ENDPOINT = import.meta.env.VITE_BOOKING_ENDPOINT || ''
 
 const form = reactive({
   name: '',
   phone: '',
   service: '',
   master: 'Любой мастер',
+  date: '',
+  time: '',
 })
 
 const sent = ref(false)
+const sending = ref(false)
 const error = ref('')
 
 const services = [
@@ -24,14 +29,56 @@ const services = [
 
 const masters = ['Любой мастер', 'Артём', 'Денис', 'Марк']
 
-function submit() {
+const times = []
+for (let h = 10; h <= 20; h++) {
+  times.push(`${h}:00`)
+  if (h < 20) times.push(`${h}:30`)
+}
+
+const today = new Date().toISOString().slice(0, 10)
+
+const maxDate = computed(() => {
+  const d = new Date()
+  d.setMonth(d.getMonth() + 2)
+  return d.toISOString().slice(0, 10)
+})
+
+async function submit() {
   error.value = ''
   if (!form.name.trim() || !form.phone.trim() || !form.service) {
     error.value = 'Заполните имя, телефон и выберите услугу'
     return
   }
-  // Здесь в реальном проекте — отправка на бэкенд / в Telegram / YClients
-  sent.value = true
+  if (!form.date || !form.time) {
+    error.value = 'Выберите дату и время'
+    return
+  }
+
+  // Без настроенного бэкенда — демо-режим
+  if (!ENDPOINT) {
+    sent.value = true
+    return
+  }
+
+  sending.value = true
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...form }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || `Ошибка ${res.status}`)
+    }
+    sent.value = true
+  } catch (e) {
+    error.value =
+      'Не получилось отправить заявку. Позвоните нам: +7 (4967) 00-00-00'
+    console.error('booking error:', e)
+  } finally {
+    sending.value = false
+  }
 }
 </script>
 
@@ -42,23 +89,25 @@ function submit() {
         <span class="section-tag">Запись</span>
         <h2 class="section-title">Запишись на стрижку</h2>
         <p class="booking-text">
-          Оставьте заявку — администратор перезвонит в течение 15 минут и подберёт удобное время.
-          Или позвоните сами:
+          Выберите услугу, мастера и удобное время — администратор подтвердит запись
+          по телефону в течение 15 минут. Или позвоните сами:
         </p>
         <a class="booking-phone" href="tel:+74967000000">+7 (4967) 00-00-00</a>
         <p class="booking-hours">Ежедневно с 10:00 до 21:00</p>
       </div>
 
       <form v-if="!sent" class="booking-form reveal" @submit.prevent="submit">
-        <label class="field">
-          <span class="field-label">Ваше имя</span>
-          <input v-model="form.name" type="text" placeholder="Иван" autocomplete="name" />
-        </label>
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">Ваше имя</span>
+            <input v-model="form.name" type="text" placeholder="Иван" autocomplete="name" />
+          </label>
 
-        <label class="field">
-          <span class="field-label">Телефон</span>
-          <input v-model="form.phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" />
-        </label>
+          <label class="field">
+            <span class="field-label">Телефон</span>
+            <input v-model="form.phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" />
+          </label>
+        </div>
 
         <label class="field">
           <span class="field-label">Услуга</span>
@@ -75,9 +124,26 @@ function submit() {
           </select>
         </label>
 
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">Дата</span>
+            <input v-model="form.date" type="date" :min="today" :max="maxDate" />
+          </label>
+
+          <label class="field">
+            <span class="field-label">Время</span>
+            <select v-model="form.time">
+              <option value="" disabled>—</option>
+              <option v-for="t in times" :key="t" :value="t">{{ t }}</option>
+            </select>
+          </label>
+        </div>
+
         <p v-if="error" class="form-error">{{ error }}</p>
 
-        <button type="submit" class="btn btn-solid form-submit">Отправить заявку</button>
+        <button type="submit" class="btn btn-solid form-submit" :disabled="sending">
+          {{ sending ? 'Отправляем…' : 'Отправить заявку' }}
+        </button>
         <p class="form-note">
           Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
         </p>
@@ -87,8 +153,8 @@ function submit() {
         <span class="success-icon">✓</span>
         <h3>Заявка отправлена!</h3>
         <p>
-          Спасибо, {{ form.name }}! Мы перезвоним на {{ form.phone }} в течение 15 минут
-          и подтвердим запись.
+          Спасибо, {{ form.name }}! Ждём вас {{ form.date.split('-').reverse().join('.') }}
+          в {{ form.time }}. Администратор перезвонит на {{ form.phone }} и подтвердит запись.
         </p>
       </div>
     </div>
@@ -145,10 +211,17 @@ function submit() {
   gap: 20px;
 }
 
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
 .field {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
 }
 
 .field-label {
@@ -170,11 +243,16 @@ function submit() {
   outline: none;
   transition: border-color 0.2s;
   appearance: none;
+  width: 100%;
 }
 
 .field input:focus,
 .field select:focus {
   border-color: var(--gold);
+}
+
+.field input[type='date'] {
+  color-scheme: dark;
 }
 
 .field select {
@@ -191,6 +269,11 @@ function submit() {
 .form-submit {
   width: 100%;
   margin-top: 4px;
+}
+
+.form-submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 .form-note {
@@ -232,6 +315,12 @@ function submit() {
   .booking-inner {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+}
+
+@media (max-width: 460px) {
+  .field-row {
+    grid-template-columns: 1fr;
   }
 }
 </style>
