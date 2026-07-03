@@ -167,26 +167,28 @@ async function submit() {
           </select>
         </label>
 
-        <div class="field-row">
-          <label class="field">
-            <span class="field-label">Дата</span>
-            <input v-model="form.date" type="date" :min="today" :max="maxDate" />
-          </label>
+        <label class="field">
+          <span class="field-label">Дата</span>
+          <input v-model="form.date" type="date" :min="today" :max="maxDate" />
+        </label>
 
-          <label class="field">
-            <span class="field-label">Время{{ busyLoading ? ' · проверяем…' : '' }}</span>
-            <select v-model="form.time">
-              <option value="" disabled>—</option>
-              <option
-                v-for="t in times"
-                :key="t"
-                :value="t"
-                :disabled="slotDisabled(t)"
-              >
-                {{ t }}{{ busy.includes(t) ? ' — занято' : '' }}
-              </option>
-            </select>
-          </label>
+        <div class="field">
+          <span class="field-label">Время{{ busyLoading ? ' · проверяем…' : '' }}</span>
+          <p v-if="!form.date" class="slots-hint">Сначала выберите дату</p>
+          <div v-else class="slots-grid">
+            <button
+              v-for="t in times"
+              :key="t"
+              type="button"
+              class="slot"
+              :class="{ selected: form.time === t, unavailable: slotDisabled(t) }"
+              :disabled="slotDisabled(t)"
+              :title="busy.includes(t) ? 'Занято' : isPastToday(t) ? 'Время прошло' : ''"
+              @click="form.time = form.time === t ? '' : t"
+            >
+              {{ t }}
+            </button>
+          </div>
         </div>
 
         <p v-if="error" class="form-error">{{ error }}</p>
@@ -309,6 +311,48 @@ async function submit() {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a25e' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 16px center;
+}
+
+.slots-hint {
+  color: var(--muted);
+  font-size: 14px;
+  padding: 6px 0;
+}
+
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+  gap: 8px;
+}
+
+.slot {
+  padding: 10px 0;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.slot:hover:not(:disabled):not(.selected) {
+  border-color: var(--gold);
+}
+
+.slot.selected {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #121212;
+  font-weight: 600;
+}
+
+.slot.unavailable {
+  color: #55534e;
+  background: transparent;
+  border-color: #232327;
+  text-decoration: line-through;
+  cursor: not-allowed;
 }
 
 .form-error {
