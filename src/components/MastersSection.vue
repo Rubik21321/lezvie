@@ -1,25 +1,29 @@
 <script setup>
+import artemPhoto from '../assets/masters/artem.jpg'
+import denisPhoto from '../assets/masters/denis.jpg'
+import markPhoto from '../assets/masters/mark.jpg'
+
 const masters = [
   {
     name: 'Артём',
     role: 'Топ-барбер, основатель',
     exp: 'Опыт 9 лет',
     about: 'Классика и fade любой сложности. Судья чемпионатов по барберингу.',
-    initials: 'А',
+    photo: artemPhoto,
   },
   {
     name: 'Денис',
     role: 'Барбер',
     exp: 'Опыт 6 лет',
     about: 'Мастер по бородам. Королевское бритьё — его коронный номер.',
-    initials: 'Д',
+    photo: denisPhoto,
   },
   {
     name: 'Марк',
     role: 'Барбер',
     exp: 'Опыт 5 лет',
     about: 'Текстурные стрижки и кроп. Найдёт форму под любой типаж.',
-    initials: 'М',
+    photo: markPhoto,
   },
 ]
 </script>
@@ -38,7 +42,7 @@ const masters = [
       <div class="masters-grid">
         <article v-for="master in masters" :key="master.name" class="master-card reveal">
           <div class="master-photo">
-            <span class="master-initials">{{ master.initials }}</span>
+            <img :src="master.photo" :alt="`Барбер ${master.name}`" loading="lazy" />
           </div>
           <div class="master-info">
             <h3 class="master-name">{{ master.name }}</h3>
@@ -77,20 +81,21 @@ const masters = [
 
 .master-photo {
   aspect-ratio: 4 / 3;
-  background:
-    radial-gradient(circle at 50% 35%, rgba(201, 162, 94, 0.22) 0%, transparent 55%),
-    linear-gradient(160deg, #232227 0%, #141416 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  background: #141416;
 }
 
-.master-initials {
-  font-family: var(--font-head);
-  font-size: 72px;
-  font-weight: 700;
-  color: var(--gold);
-  opacity: 0.85;
+.master-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.05);
+  transition: filter 0.35s ease, transform 0.35s ease;
+}
+
+.master-card:hover .master-photo img {
+  filter: grayscale(40%) contrast(1.02);
+  transform: scale(1.03);
 }
 
 .master-info {
