@@ -5,6 +5,7 @@ import HeroSection from './components/HeroSection.vue'
 import ServicesSection from './components/ServicesSection.vue'
 import AdvantagesSection from './components/AdvantagesSection.vue'
 import MastersSection from './components/MastersSection.vue'
+import GallerySection from './components/GallerySection.vue'
 import ReviewsSection from './components/ReviewsSection.vue'
 import BookingSection from './components/BookingSection.vue'
 import MapSection from './components/MapSection.vue'
@@ -33,6 +34,7 @@ onMounted(() => {
     <ServicesSection />
     <AdvantagesSection />
     <MastersSection />
+    <GallerySection />
     <ReviewsSection />
     <BookingSection />
     <MapSection />
