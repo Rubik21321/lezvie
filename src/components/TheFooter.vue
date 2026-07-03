@@ -48,6 +48,7 @@ const year = new Date().getFullYear()
 
     <div class="container footer-bottom">
       <p>© {{ year }} Барбершоп «Лезвие», Подольск</p>
+      <p><a href="#privacy">Политика конфиденциальности</a></p>
       <p>ИП Иванов А. А. · ИНН 000000000000</p>
     </div>
   </footer>
@@ -121,6 +122,16 @@ const year = new Date().getFullYear()
   padding: 20px;
   font-size: 13px;
   color: var(--muted);
+}
+
+.footer-bottom a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.footer-bottom a:hover {
+  color: var(--gold);
 }
 
 @media (max-width: 860px) {

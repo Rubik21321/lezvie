@@ -10,6 +10,7 @@ import ReviewsSection from './components/ReviewsSection.vue'
 import BookingSection from './components/BookingSection.vue'
 import MapSection from './components/MapSection.vue'
 import TheFooter from './components/TheFooter.vue'
+import PrivacyPolicy from './components/PrivacyPolicy.vue'
 
 onMounted(() => {
   const observer = new IntersectionObserver(
@@ -40,4 +41,5 @@ onMounted(() => {
     <MapSection />
   </main>
   <TheFooter />
+  <PrivacyPolicy />
 </template>

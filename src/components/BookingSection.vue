@@ -15,6 +15,7 @@ const form = reactive({
 const sent = ref(false)
 const sending = ref(false)
 const error = ref('')
+const consent = ref(false)
 
 const services = [
   'Мужская стрижка',
@@ -33,6 +34,30 @@ const times = []
 for (let h = 10; h <= 20; h++) {
   times.push(`${h}:00`)
   if (h < 20) times.push(`${h}:30`)
+}
+
+// Маска телефона +7 (___) ___-__-__
+function phoneDigits(value) {
+  let d = value.replace(/\D/g, '')
+  if (d.startsWith('8')) d = '7' + d.slice(1)
+  if (d && !d.startsWith('7')) d = '7' + d
+  return d.slice(0, 11)
+}
+
+function formatPhone(d) {
+  if (!d) return ''
+  const p = d.slice(1)
+  let out = '+7'
+  if (p.length > 0) out += ' (' + p.slice(0, 3)
+  if (p.length > 3) out += ') ' + p.slice(3, 6)
+  if (p.length > 6) out += '-' + p.slice(6, 8)
+  if (p.length > 8) out += '-' + p.slice(8, 10)
+  return out
+}
+
+function onPhoneInput(e) {
+  form.phone = formatPhone(phoneDigits(e.target.value))
+  e.target.value = form.phone
 }
 
 const today = new Date().toISOString().slice(0, 10)
@@ -86,6 +111,10 @@ async function submit() {
     error.value = 'Заполните имя, телефон и выберите услугу'
     return
   }
+  if (form.phone.replace(/\D/g, '').length !== 11) {
+    error.value = 'Введите номер телефона полностью'
+    return
+  }
   if (!form.date || !form.time) {
     error.value = 'Выберите дату и время'
     return
@@ -115,6 +144,10 @@ async function submit() {
       throw new Error(data.error || `Ошибка ${res.status}`)
     }
     sent.value = true
+    // Цель для Яндекс.Метрики (если счётчик подключён)
+    if (typeof window.ym === 'function' && window.YM_ID) {
+      window.ym(window.YM_ID, 'reachGoal', 'booking_submit')
+    }
   } catch (e) {
     error.value =
       'Не получилось отправить заявку. Позвоните нам: +7 (4967) 00-00-00'
@@ -137,6 +170,19 @@ async function submit() {
         </p>
         <a class="booking-phone" href="tel:+74967000000">+7 (4967) 00-00-00</a>
         <p class="booking-hours">Ежедневно с 10:00 до 21:00</p>
+
+        <!-- Ссылку замените на реальный аккаунт барбершопа -->
+        <a
+          class="tg-btn"
+          href="https://t.me/lezvie_barber"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+            <path d="M21.9 4.6c.3-1.2-.9-2.2-2-1.7L2.9 9.6c-1.2.5-1.1 2.2.1 2.6l4.4 1.4 1.7 5.4c.3 1 1.6 1.3 2.3.5l2.4-2.5 4.5 3.3c.9.7 2.2.2 2.4-.9l3.2-14.8ZM8.5 12.9l9.3-5.7c.2-.1.4.2.2.3l-7.7 7.1c-.3.3-.5.7-.6 1.1l-.3 2.2c0 .3-.5.3-.5 0l-.7-4.1c-.1-.4.1-.7.3-.9Z" />
+          </svg>
+          Или напишите нам в Telegram
+        </a>
       </div>
 
       <form v-if="!sent" class="booking-form reveal" @submit.prevent="submit">
@@ -148,7 +194,14 @@ async function submit() {
 
           <label class="field">
             <span class="field-label">Телефон</span>
-            <input v-model="form.phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" />
+            <input
+              :value="form.phone"
+              type="tel"
+              placeholder="+7 (___) ___-__-__"
+              autocomplete="tel"
+              inputmode="tel"
+              @input="onPhoneInput"
+            />
           </label>
         </div>
 
@@ -193,12 +246,17 @@ async function submit() {
 
         <p v-if="error" class="form-error">{{ error }}</p>
 
-        <button type="submit" class="btn btn-solid form-submit" :disabled="sending">
+        <label class="consent">
+          <input v-model="consent" type="checkbox" />
+          <span>
+            Соглашаюсь на
+            <a href="#privacy">обработку персональных данных</a>
+          </span>
+        </label>
+
+        <button type="submit" class="btn btn-solid form-submit" :disabled="sending || !consent">
           {{ sending ? 'Отправляем…' : 'Отправить заявку' }}
         </button>
-        <p class="form-note">
-          Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
-        </p>
       </form>
 
       <div v-else class="booking-success reveal is-visible">
@@ -252,6 +310,27 @@ async function submit() {
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 14px 24px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.25s, color 0.25s;
+}
+
+.tg-btn:hover {
+  background: var(--gold);
+  color: #121212;
 }
 
 .booking-form {
@@ -360,20 +439,43 @@ async function submit() {
   font-size: 14px;
 }
 
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.consent input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.consent a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.consent a:hover {
+  color: var(--gold-bright);
+}
+
 .form-submit {
   width: 100%;
   margin-top: 4px;
 }
 
 .form-submit:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-.form-note {
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .booking-success {

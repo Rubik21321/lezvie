@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rubik21321.github.io/lezvie/sitemap.xml

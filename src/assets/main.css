@@ -17,8 +17,10 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -126,6 +128,27 @@ button {
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+}
+
+/* Уважение к системной настройке «уменьшить движение» */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .lightbox *,
+  .work img,
+  .master-photo img {
+    transition: none !important;
+  }
+}
+
+/* Видимый фокус для навигации с клавиатуры */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
 @media (max-width: 640px) {
