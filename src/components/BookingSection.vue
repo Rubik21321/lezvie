@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 
 const ENDPOINT = import.meta.env.VITE_BOOKING_ENDPOINT || ''
 
@@ -43,6 +43,43 @@ const maxDate = computed(() => {
   return d.toISOString().slice(0, 10)
 })
 
+// Занятые слоты для выбранного мастера и даты
+const busy = ref([])
+const busyLoading = ref(false)
+
+async function loadBusy() {
+  if (!ENDPOINT || !form.date) {
+    busy.value = []
+    return
+  }
+  busyLoading.value = true
+  try {
+    const res = await fetch(
+      `${ENDPOINT}?master=${encodeURIComponent(form.master)}&date=${form.date}`
+    )
+    const data = await res.json()
+    busy.value = data.ok ? data.busy : []
+  } catch {
+    busy.value = []
+  } finally {
+    busyLoading.value = false
+  }
+  if (busy.value.includes(form.time)) form.time = ''
+}
+
+watch(() => [form.master, form.date], loadBusy)
+
+function isPastToday(t) {
+  if (form.date !== today) return false
+  const [h, m] = t.split(':').map(Number)
+  const now = new Date()
+  return h * 60 + m <= now.getHours() * 60 + now.getMinutes() + 29 // ближайшие полчаса не бронируем
+}
+
+function slotDisabled(t) {
+  return busy.value.includes(t) || isPastToday(t)
+}
+
 async function submit() {
   error.value = ''
   if (!form.name.trim() || !form.phone.trim() || !form.service) {
@@ -68,6 +105,12 @@ async function submit() {
       body: JSON.stringify({ ...form }),
     })
     const data = await res.json().catch(() => ({}))
+    if (res.status === 409) {
+      error.value = data.error || 'Это время уже занято — выберите другое'
+      form.time = ''
+      loadBusy()
+      return
+    }
     if (!res.ok || !data.ok) {
       throw new Error(data.error || `Ошибка ${res.status}`)
     }
@@ -131,10 +174,17 @@ async function submit() {
           </label>
 
           <label class="field">
-            <span class="field-label">Время</span>
+            <span class="field-label">Время{{ busyLoading ? ' · проверяем…' : '' }}</span>
             <select v-model="form.time">
               <option value="" disabled>—</option>
-              <option v-for="t in times" :key="t" :value="t">{{ t }}</option>
+              <option
+                v-for="t in times"
+                :key="t"
+                :value="t"
+                :disabled="slotDisabled(t)"
+              >
+                {{ t }}{{ busy.includes(t) ? ' — занято' : '' }}
+              </option>
             </select>
           </label>
         </div>
