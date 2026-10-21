@@ -42,8 +42,8 @@
       })();
     </script>
 
-    <script type="module" crossorigin src="/lezvie/assets/main-BvHp3DNb.js"></script>
-    <link rel="stylesheet" crossorigin href="/lezvie/assets/main-CXlQ-Atk.css">
+    <script type="module" crossorigin src="/lezvie/assets/main-DhnXCZsF.js"></script>
+    <link rel="stylesheet" crossorigin href="/lezvie/assets/main-DlxWx2fJ.css">
   </head>
   <body>
     <!-- data-page — какую страницу собирает Vue (см. src/App.vue) -->
@@ -73,10 +73,57 @@
       (document,screen)</script><!--/LiveInternet-->
 
       <!-- Sber Ads / Рамблер Топ-100 (ЛР4): ads.sber.ru → код счётчика + виджет Топ-100 -->
-      <!-- SBER_ADS -->
+      <!-- Top100 (Kraken) Counter -->
+      <!-- attributes_dataset: блоки страниц размечены атрибутом data-lezvie-block="имя блока"
+           (аналитика блоков в Sber Ads); trackHashes — учёт хэшей (#privacy) -->
+      <script>
+          (function (w, d, c) {
+          (w[c] = w[c] || []).push(function() {
+              var options = {
+                  project: 7753177,
+                  attributes_dataset: [ "lezvie-block" ],
+                  trackHashes: true,
+                  user_id: null,
+              };
+              try {
+                  w.top100Counter = new top100(options);
+              } catch(e) { }
+          });
+          var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script"),
+          f = function () { n.parentNode.insertBefore(s, n); };
+          s.type = "text/javascript";
+          s.async = true;
+          s.src =
+          (d.location.protocol == "https:" ? "https:" : "http:") +
+          "//st.top100.ru/top100/top100.js";
 
-      <!-- MyTracker / Рейтинг Mail.ru (ЛР5): top.mail.ru → код счётчика + логотип -->
-      <!-- TOP_MAIL_RU -->
+          if (w.opera == "[object Opera]") {
+          d.addEventListener("DOMContentLoaded", f, false);
+      } else { f(); }
+      })(window, document, "_top100q");
+      </script>
+      <noscript>
+        <img src="//counter.rambler.ru/top100.cnt?pid=7753177" alt="Топ-100" />
+      </noscript>
+      <!-- END Top100 (Kraken) Counter -->
+
+      <!-- MyTracker (ЛР5): app.tracker.my.com → приложение Web → вкладка «Web-счётчик».
+           Цели отправляет src/goals.js (тот же ID счётчика) -->
+      <!-- Top.Mail.Ru counter -->
+      <script type="text/javascript">
+      var _tmr = window._tmr || (window._tmr = []);
+      _tmr.push({id: "3807159", type: "pageView", start: (new Date()).getTime()});
+      (function (d, w, id) {
+        if (d.getElementById(id)) return;
+        var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+        ts.src = "https://top-fwz1.mail.ru/js/code.js";
+        var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+        if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+      })(document, window, "tmr-code");
+      </script>
+      <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3807159;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+      <!-- /Top.Mail.Ru counter -->
 
     </div>
     <!-- ===== КОНЕЦ СЧЁТЧИКОВ ===== -->
