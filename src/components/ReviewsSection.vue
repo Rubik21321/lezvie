@@ -24,7 +24,7 @@ const reviews = [
 </script>
 
 <template>
-  <section id="reviews" class="section">
+  <section id="reviews" class="section" data-lezvie-block="Отзывы">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Отзывы</span>

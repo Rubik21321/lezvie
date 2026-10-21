@@ -1,5 +1,5 @@
 <template>
-  <section class="hero">
+  <section class="hero" data-lezvie-block="Главный экран">
     <div class="hero-bg" aria-hidden="true">
       <div class="hero-stripes"></div>
       <div class="hero-glow"></div>
@@ -16,8 +16,8 @@
         Виски, кофе и разговоры по делу — в двух минутах от станции Подольск.
       </p>
       <div class="hero-actions">
-        <a href="./zapis.html" class="btn btn-solid">Записаться онлайн</a>
-        <a href="./uslugi.html" class="btn btn-ghost">Услуги и цены</a>
+        <a href="./zapis.html" class="btn btn-solid" data-lezvie-block="Кнопка записи: главный экран">Записаться онлайн</a>
+        <a href="./uslugi.html" class="btn btn-ghost" data-lezvie-block="Кнопка услуг: главный экран">Услуги и цены</a>
       </div>
 
       <ul class="hero-stats">

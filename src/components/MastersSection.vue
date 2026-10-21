@@ -29,7 +29,7 @@ const masters = [
 </script>
 
 <template>
-  <section id="masters" class="section masters">
+  <section id="masters" class="section masters" data-lezvie-block="Мастера">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Команда</span>
@@ -48,7 +48,7 @@ const masters = [
             <h3 class="master-name">{{ master.name }}</h3>
             <p class="master-role">{{ master.role }} · {{ master.exp }}</p>
             <p class="master-about">{{ master.about }}</p>
-            <a :href="`./zapis.html?master=${encodeURIComponent(master.name)}`" class="master-link">
+            <a :href="`./zapis.html?master=${encodeURIComponent(master.name)}`" class="master-link" :data-lezvie-block="`Запись к мастеру: ${master.name}`">
               Записаться к мастеру →
             </a>
           </div>

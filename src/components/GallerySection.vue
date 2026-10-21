@@ -44,7 +44,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section id="gallery" class="section">
+  <section id="gallery" class="section" data-lezvie-block="Галерея работ">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Галерея</span>

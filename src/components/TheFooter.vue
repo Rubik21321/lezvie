@@ -3,7 +3,7 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="footer">
+  <footer class="footer" data-lezvie-block="Подвал">
     <div class="container footer-grid">
       <div class="footer-col">
         <a href="./" class="footer-logo"><span>✂</span> ЛЕЗВИЕ</a>

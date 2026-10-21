@@ -1,5 +1,5 @@
 <template>
-  <section id="contacts" class="section map-section">
+  <section id="contacts" class="section map-section" data-lezvie-block="Контакты и карта">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Контакты</span>
@@ -25,7 +25,7 @@
               <a href="tel:+74967000000">+7 (4967) 00-00-00</a>
             </p>
           </div>
-          <a href="./zapis.html" class="btn btn-solid map-cta">Записаться</a>
+          <a href="./zapis.html" class="btn btn-solid map-cta" data-lezvie-block="Кнопка записи: контакты">Записаться</a>
         </div>
 
         <div class="map-frame">

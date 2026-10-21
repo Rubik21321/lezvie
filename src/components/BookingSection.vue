@@ -163,7 +163,7 @@ async function submit() {
 </script>
 
 <template>
-  <section id="booking" class="section booking">
+  <section id="booking" class="section booking" data-lezvie-block="Форма записи">
     <div class="container booking-inner">
       <div class="booking-info reveal">
         <span class="section-tag">Запись</span>
@@ -258,7 +258,7 @@ async function submit() {
           </span>
         </label>
 
-        <button type="submit" class="btn btn-solid form-submit" :disabled="sending || !consent">
+        <button type="submit" class="btn btn-solid form-submit" data-lezvie-block="Кнопка отправки заявки" :disabled="sending || !consent">
           {{ sending ? 'Отправляем…' : 'Отправить заявку' }}
         </button>
       </form>

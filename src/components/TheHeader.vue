@@ -27,7 +27,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <template>
-  <header class="header" :class="{ scrolled }">
+  <header class="header" data-lezvie-block="Шапка" :class="{ scrolled }">
     <div class="container header-inner">
       <a href="./" class="logo">
         <span class="logo-mark">✂</span>
@@ -49,6 +49,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
         <a
           href="./zapis.html"
           class="btn btn-solid nav-cta"
+          data-lezvie-block="Кнопка записи: шапка"
           :aria-current="page === 'booking' ? 'page' : undefined"
           @click="menuOpen = false"
         >

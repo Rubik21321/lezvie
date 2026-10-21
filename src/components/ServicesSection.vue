@@ -53,7 +53,7 @@ const services = [
 </script>
 
 <template>
-  <section id="services" class="section services">
+  <section id="services" class="section services" data-lezvie-block="Услуги и цены">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Прайс</span>

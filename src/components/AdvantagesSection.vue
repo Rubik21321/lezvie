@@ -46,7 +46,7 @@ const icons = {
 </script>
 
 <template>
-  <section id="advantages" class="section">
+  <section id="advantages" class="section" data-lezvie-block="Преимущества">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Почему мы</span>
