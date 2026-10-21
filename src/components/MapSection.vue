@@ -25,7 +25,7 @@
               <a href="tel:+74967000000">+7 (4967) 00-00-00</a>
             </p>
           </div>
-          <a href="#booking" class="btn btn-solid map-cta">Записаться</a>
+          <a href="./zapis.html" class="btn btn-solid map-cta">Записаться</a>
         </div>
 
         <div class="map-frame">

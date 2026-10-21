@@ -151,6 +151,31 @@ button {
   outline-offset: 2px;
 }
 
+/* Внутренние страницы: отступ под фиксированный хедер, футер не поднимается к середине экрана */
+.page-inner {
+  padding-top: 72px;
+  min-height: 75vh;
+}
+
+/* Счётчики статистики под подвалом (код — в partials/counters.html) */
+.site-counters {
+  width: min(1140px, 100% - 40px);
+  margin-inline: auto;
+  padding: 0 20px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-counters:not(:has(*)) {
+  display: none;
+}
+
+.site-counters img {
+  display: inline-block;
+}
+
 @media (max-width: 640px) {
   .section {
     padding: 64px 0;

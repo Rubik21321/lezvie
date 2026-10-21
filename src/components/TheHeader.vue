@@ -1,20 +1,25 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const scrolled = ref(false)
+const props = defineProps({
+  page: { type: String, default: 'home' },
+})
+
+// На внутренних страницах нет тёмного первого экрана, поэтому фон хедера сразу сплошной
+const solid = props.page !== 'home'
+const scrolled = ref(solid)
 const menuOpen = ref(false)
 
 const links = [
-  { href: '#services', label: 'Услуги' },
-  { href: '#advantages', label: 'О нас' },
-  { href: '#masters', label: 'Мастера' },
-  { href: '#gallery', label: 'Работы' },
-  { href: '#reviews', label: 'Отзывы' },
-  { href: '#contacts', label: 'Контакты' },
+  { href: './', label: 'Главная', page: 'home' },
+  { href: './uslugi.html', label: 'Услуги', page: 'services' },
+  { href: './mastera.html', label: 'Мастера', page: 'masters' },
+  { href: './raboty.html', label: 'Работы', page: 'gallery' },
+  { href: './kontakty.html', label: 'Контакты', page: 'contacts' },
 ]
 
 function onScroll() {
-  scrolled.value = window.scrollY > 30
+  scrolled.value = solid || window.scrollY > 30
 }
 
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
@@ -24,7 +29,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 <template>
   <header class="header" :class="{ scrolled }">
     <div class="container header-inner">
-      <a href="#" class="logo">
+      <a href="./" class="logo">
         <span class="logo-mark">✂</span>
         ЛЕЗВИЕ
       </a>
@@ -35,11 +40,20 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           :key="link.href"
           :href="link.href"
           class="nav-link"
+          :class="{ active: link.page === page }"
+          :aria-current="link.page === page ? 'page' : undefined"
           @click="menuOpen = false"
         >
           {{ link.label }}
         </a>
-        <a href="#booking" class="btn btn-solid nav-cta" @click="menuOpen = false">Записаться</a>
+        <a
+          href="./zapis.html"
+          class="btn btn-solid nav-cta"
+          :aria-current="page === 'booking' ? 'page' : undefined"
+          @click="menuOpen = false"
+        >
+          Записаться
+        </a>
       </nav>
 
       <button
@@ -119,11 +133,13 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   transition: width 0.25s ease;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: var(--gold);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 

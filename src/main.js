@@ -12,4 +12,6 @@ import '@fontsource/inter/600.css'
 
 import './assets/main.css'
 
-createApp(App).mount('#app')
+// Каждая HTML-страница указывает в data-page, какие секции показать
+const el = document.getElementById('app')
+createApp(App, { page: el.dataset.page || 'home' }).mount(el)

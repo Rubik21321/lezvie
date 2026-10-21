@@ -48,7 +48,9 @@ const masters = [
             <h3 class="master-name">{{ master.name }}</h3>
             <p class="master-role">{{ master.role }} · {{ master.exp }}</p>
             <p class="master-about">{{ master.about }}</p>
-            <a href="#booking" class="master-link">Записаться к мастеру →</a>
+            <a :href="`./zapis.html?master=${encodeURIComponent(master.name)}`" class="master-link">
+              Записаться к мастеру →
+            </a>
           </div>
         </article>
       </div>

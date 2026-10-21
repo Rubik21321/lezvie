@@ -46,9 +46,23 @@ npm run deploy   # сборка + публикация на GitHub Pages (сай
 Секреты функций (Dashboard → Edge Functions → Secrets): `TG_BOT_TOKEN`, `TG_CHAT_ID`, `TG_WEBHOOK_SECRET`.
 Адрес функции для формы — в `.env` (`VITE_BOOKING_ENDPOINT`).
 
+## Страницы и счётчики статистики
+
+Сайт многостраничный: `index.html` (главная), `uslugi.html`, `mastera.html`,
+`raboty.html`, `zapis.html`, `kontakty.html`. У каждой свои `<title>`, description и canonical,
+атрибут `data-page` у `#app` говорит Vue, какие секции показать (карта — в `src/App.vue`).
+Новую страницу нужно добавить и в массив `pages` в `vite.config.js`.
+
+Общие куски HTML лежат в `partials/` и подставляются при сборке во все страницы
+(комментарий `<!-- include:имя -->`):
+
+- `partials/metrika.html` — Яндекс.Метрика
+- `partials/counters.html` — LiveInternet, Sber Ads (Топ-100), Top.Mail.Ru: код из сервиса
+  вставляется один раз вместо заглушки и попадает в подвал всех страниц
+
 ## Структура фронтенда
 
-- `src/App.vue` — сборка секций + анимация появления при скролле (IntersectionObserver)
+- `src/App.vue` — набор секций для каждой страницы + анимация появления при скролле (IntersectionObserver)
 - `src/components/TheHeader.vue` — фиксированный хедер, мобильное бургер-меню
 - `src/components/HeroSection.vue` — первый экран с CTA и статистикой
 - `src/components/ServicesSection.vue` — услуги и цены (данные в массиве `services`)

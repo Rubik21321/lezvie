@@ -16,8 +16,8 @@
         Виски, кофе и разговоры по делу — в двух минутах от станции Подольск.
       </p>
       <div class="hero-actions">
-        <a href="#booking" class="btn btn-solid">Записаться онлайн</a>
-        <a href="#services" class="btn btn-ghost">Услуги и цены</a>
+        <a href="./zapis.html" class="btn btn-solid">Записаться онлайн</a>
+        <a href="./uslugi.html" class="btn btn-ghost">Услуги и цены</a>
       </div>
 
       <ul class="hero-stats">

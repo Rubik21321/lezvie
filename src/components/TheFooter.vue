@@ -6,7 +6,7 @@ const year = new Date().getFullYear()
   <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-col">
-        <a href="#" class="footer-logo"><span>✂</span> ЛЕЗВИЕ</a>
+        <a href="./" class="footer-logo"><span>✂</span> ЛЕЗВИЕ</a>
         <p class="footer-desc">
           Мужской барбершоп в Подольске. Стрижки, бороды, королевское бритьё.
         </p>
@@ -38,10 +38,11 @@ const year = new Date().getFullYear()
       <div class="footer-col">
         <h4 class="footer-title">Навигация</h4>
         <ul class="footer-list">
-          <li><a href="#services">Услуги и цены</a></li>
-          <li><a href="#masters">Мастера</a></li>
-          <li><a href="#reviews">Отзывы</a></li>
-          <li><a href="#booking">Запись</a></li>
+          <li><a href="./uslugi.html">Услуги и цены</a></li>
+          <li><a href="./mastera.html">Мастера</a></li>
+          <li><a href="./raboty.html">Наши работы</a></li>
+          <li><a href="./zapis.html">Онлайн-запись</a></li>
+          <li><a href="./kontakty.html">Контакты</a></li>
         </ul>
       </div>
     </div>

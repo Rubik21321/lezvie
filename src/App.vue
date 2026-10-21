@@ -12,6 +12,22 @@ import MapSection from './components/MapSection.vue'
 import TheFooter from './components/TheFooter.vue'
 import PrivacyPolicy from './components/PrivacyPolicy.vue'
 
+const props = defineProps({
+  page: { type: String, default: 'home' },
+})
+
+// Какие секции на какой странице (страницы — HTML-файлы в корне проекта)
+const pageSections = {
+  home: [HeroSection, AdvantagesSection, ReviewsSection],
+  services: [ServicesSection],
+  masters: [MastersSection],
+  gallery: [GallerySection],
+  booking: [BookingSection],
+  contacts: [MapSection],
+}
+
+const sections = pageSections[props.page] || pageSections.home
+
 onMounted(() => {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -29,16 +45,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <TheHeader />
-  <main>
-    <HeroSection />
-    <ServicesSection />
-    <AdvantagesSection />
-    <MastersSection />
-    <GallerySection />
-    <ReviewsSection />
-    <BookingSection />
-    <MapSection />
+  <TheHeader :page="page" />
+  <main :class="{ 'page-inner': page !== 'home' }">
+    <component :is="section" v-for="(section, i) in sections" :key="i" />
   </main>
   <TheFooter />
   <PrivacyPolicy />

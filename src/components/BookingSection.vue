@@ -30,6 +30,10 @@ const services = [
 
 const masters = ['Любой мастер', 'Артём', 'Денис', 'Марк']
 
+// Со страницы «Мастера» приходят по ссылке zapis.html?master=Имя — выбираем его сразу
+const preselected = new URLSearchParams(window.location.search).get('master')
+if (masters.includes(preselected)) form.master = preselected
+
 const times = []
 for (let h = 10; h <= 20; h++) {
   times.push(`${h}:00`)
