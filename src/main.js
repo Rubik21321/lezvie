@@ -11,6 +11,9 @@ import '@fontsource/inter/500.css'
 import '@fontsource/inter/600.css'
 
 import './assets/main.css'
+import { trackLinkGoals } from './goals.js'
+
+trackLinkGoals()
 
 // Каждая HTML-страница указывает в data-page, какие секции показать
 const el = document.getElementById('app')

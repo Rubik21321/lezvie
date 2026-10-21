@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, ref, computed, watch } from 'vue'
+import { reachGoal } from '../goals.js'
 
 const ENDPOINT = import.meta.env.VITE_BOOKING_ENDPOINT || ''
 
@@ -148,10 +149,7 @@ async function submit() {
       throw new Error(data.error || `Ошибка ${res.status}`)
     }
     sent.value = true
-    // Цель для Яндекс.Метрики (если счётчик подключён)
-    if (typeof window.ym === 'function' && window.YM_ID) {
-      window.ym(window.YM_ID, 'reachGoal', 'booking_submit')
-    }
+    reachGoal('booking_submit', { service: form.service, master: form.master })
   } catch (e) {
     error.value =
       'Не получилось отправить заявку. Позвоните нам: +7 (4967) 00-00-00'
